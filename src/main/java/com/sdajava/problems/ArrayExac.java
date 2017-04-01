@@ -6,6 +6,9 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import static java.util.stream.Collectors.toList;
+
+
 /**
  * Created by RENT on 2017-04-01.
  */
@@ -24,11 +27,12 @@ public class ArrayExac {
         return elements.size();
     }
     public static <T> T lastRecursion(List<T> elements) {
-        if (elements.size() == 1) {
-            return elements.get(0);
+        List<T> lista = new ArrayList<T>(elements);
+        if (lista.size() == 1) {
+            return lista.get(0);
         }
-            elements.remove(0);
-        return lastRecursion(elements);
+            lista.remove(0);
+        return lastRecursion(lista);
     }
 
     public static <T> List<T> reverse(List<T> lista){
@@ -44,17 +48,35 @@ public class ArrayExac {
     }
 
     public static <T> List<T> compress(List<T> lista) {
-        int suma = 0; int a = lista.size();
-        for (int i = 1; i < a; i++) {
-            for (int j = 0; j < i; j++) {
-                if (lista.get(i).equals(lista.get(j))) {
-                    lista.remove(i);
-                    suma++;
-                    a = lista.size() - suma;
-                }
+        return lista.stream().distinct().collect(toList());
+    }
+    public static <T> List<T> duplicates(List<T> lista, int a) {
+        List<T> lista2 = new ArrayList<T>();
+
+        for(T p:lista){
+            for (int i = 0; i < a; i++){
+                lista2.add(p);
             }
         }
-        return lista;
+        return lista2;
+    }
+    public static <T> List<T> duplicatesStream(List<T> lista, int a) {
+        return lista.stream().flatMap(e -> Collections.nCopies(a, e).stream()).collect(toList());
+    }
+
+    public static <T> List<T> dropEveryNth(List<T> lista, int a){
+        /* List<T> list2 = new ArrayList<T>();
+        int i = 1;
+        for (T p: lista){
+            if (i % a != 0) {
+                list2.add(p);
+            }
+            i++;
+        }
+       return list2; */
+
+     return lista.stream().filter(e -> ((lista.indexOf(e)+1) % a != 0) ).collect(toList());
+
     }
 
 }

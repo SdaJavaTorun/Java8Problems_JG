@@ -62,4 +62,19 @@ public class ArraysTest {
         List<String> compressedList = ArrayExac.compress(asList("a","a","b","b"));
         assertThat(compressedList, contains("a","b"));
     }
+    @Test
+    public void shouldDuplicateElementsInAList() throws Exception{
+        List<String> duplicates = ArrayExac.duplicates(Arrays.asList("a","b","c"),3);
+        assertThat(duplicates, contains("a","a","a", "b","b","b" , "c","c","c"));
+    }
+    @Test
+    public void shouldDuplicateElementsInAListStream() throws Exception{
+        List<String> duplicates = ArrayExac.duplicatesStream(Arrays.asList("a","b","c"),3);
+        assertThat(duplicates, contains("a","a","a", "b","b","b" , "c","c","c"));
+    }
+    @Test
+    public void shouldDropEveryNthElement() throws Exception{
+        List<String> result = ArrayExac.dropEveryNth(Arrays.asList("a","b","c","d","e","f","g","h","i","j","k"),3);
+        assertThat(result, contains("a","b","d", "e","g","h" , "j","k"));
+    }
 }
